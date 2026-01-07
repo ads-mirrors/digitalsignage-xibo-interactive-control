@@ -64,18 +64,16 @@ window.xiboIC = (function() {
 
       // Preview
       if (self.isPreview) {
-        // Call the preview action if it exists
-        if (typeof parent.previewActionTrigger == 'function') {
-          parent.previewActionTrigger(path, data, done);
-        } else {
-          // Stop the method to avoid a request
-          // but send a fake response
-          if (typeof(done) == 'function') {
-            done({
-              status: 200,
-              responseText: 'OK',
-            });
-          }
+        // previewActionTrigger was removed in 4.1, needs to be re-implemented
+        // https://github.com/xibosignage/xibo/issues/3797
+
+        // Stop the method to avoid a request
+        // but send a fake response
+        if (typeof(done) == 'function') {
+          done({
+            status: 200,
+            responseText: 'OK',
+          });
         }
 
         // Stop the method to avoid a request

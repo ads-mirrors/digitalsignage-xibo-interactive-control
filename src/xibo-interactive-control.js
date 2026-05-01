@@ -137,6 +137,15 @@ window.xiboIC = (function() {
           xiboIC.notifyData(evt.data.data.dataKey);
         }
       }
+      // BroadcastChannel cannot cross distinct opaque origins inside sandboxed iframes,
+      // so in preview mode we also handle xiboDC messages delivered via postMessage.
+      if (_lib.isPreview && evt.data && evt.data.type) {
+        if (evt.data.type === 'xiboDC_notify') {
+          xiboIC.notifyData(evt.data.dataKey);
+        } else if (evt.data.type === 'xiboDC_data') {
+          _IPC.previewData[evt.data.dataKey] = evt.data.data;
+        }
+      }
     },
 
     registerIPC: function() {
